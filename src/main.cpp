@@ -9,22 +9,31 @@
  */
 
 
-CapacitiveSensor   cs_4_5 = CapacitiveSensor(4,5);        // 10M resistor between pins 4 & 8, pin 8 is sensor pin, add a wire and or foil
+// set send and recieve values
+int send = 4;
+int recieve = 5;
+// set relay control value
+int relay = 2;
 
-void setup()                    
-{
-   //cs_4_5.set_CS_AutocaL_Millis(0xFFFFFFFF);     // turn off autocalibrate on channel 1 - just as an example
-   cs_4_5.set_CS_Timeout_Millis(100000);
+CapacitiveSensor   cs_send_recieve = CapacitiveSensor(4,5);        // 1M resistor between pins 4 & 5, pin 5 is sensor pin, add a wire and or foil
+
+
+
+void setup()  {
+   //cs_send_recieve.set_CS_AutocaL_Millis(0xFFFFFFFF);     // turn off autocalibrate on channel 1 - just as an example
+   cs_send_recieve.set_CS_Timeout_Millis(100000);
 
    Serial.begin(9600);
-   pinMode(LED_BUILTIN, OUTPUT);                         //set d13 as led output for sensing
-  
-   }
+   pinMode(LED_BUILTIN, OUTPUT);                         //set d13 as led output for sensing readout
+   pinMode(relay, OUTPUT);
+   
+}
+
 
 void loop()                    
 {
     long start = millis();
-       long total3 =  cs_4_5.capacitiveSensor(30);
+       long total3 =  cs_send_recieve.capacitiveSensor(30);
 
     Serial.print(millis() - start);        // check on performance in milliseconds
     Serial.print("\t");                    // tab character for debug windown spacing
@@ -35,13 +44,13 @@ void loop()
     if (total3 >= 500)
     {
       digitalWrite(LED_BUILTIN, HIGH);
-      digitalWrite(12, HIGH);
-      //delay(1000);
+      digitalWrite(relay, HIGH);
+      delay(1000);
     }
     else
     {
       digitalWrite(LED_BUILTIN, LOW);
-      digitalWrite(12,LOW);
+      digitalWrite(relay,LOW);
     }
     
     
