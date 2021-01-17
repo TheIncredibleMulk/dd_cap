@@ -3,19 +3,21 @@
 /*
  * CapitiveSense Library Demo Sketch
  * Paul Badger 2008
+ * Adding updates for art installation project.
+ * Andrew Mulkey 2021
  * Uses a high value resistor e.g. 10M between send pin and receive pin
  * Resistor effects sensitivity, experiment with values, 50K - 50M. Larger resistor values yield larger sensor values.
  * Receive pin is the sensor pin - try different amounts of foil/metal on this pin
  */
 
 
-// set send and recieve values
+// set send and recieve pin numbers
 int send = 4;
 int recieve = 5;
 // set relay control value
 int relay = 2;
 
-CapacitiveSensor   cs_send_recieve = CapacitiveSensor(4,5);        // 1M resistor between pins 4 & 5, pin 5 is sensor pin, add a wire and or foil
+CapacitiveSensor   cs_send_recieve = CapacitiveSensor(send,recieve);        // 1M resistor between pins 4 & 5, pin 5 is sensor pin, add a wire and or foil
 
 
 
