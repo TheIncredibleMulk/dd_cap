@@ -12,15 +12,15 @@
 
 
 // set send and recieve pin numbers
-int send1 = 6;
+int send1 = 2;
 int recieve1 = 3;
-int send2 = 7;
+int send2 = 5;
 int recieve2 = 4;
-int send3 = 8;
-int recieve3 = 5;
-int send4 = 11;
-int recieve4 = 9;
-// set relay control value
+int send3 = 7;
+int recieve3 = 6;
+int send4 = 9;
+int recieve4 = 8;
+// set GPIO Relay/Opto Coupler value
 int relay = 12;
 
 CapacitiveSensor   cs_send1_recieve1 = CapacitiveSensor(send1,recieve1);        // 1M resistor between pins 6 & 3, pin 3 is sensor pin, add a wire and or foil
@@ -69,21 +69,29 @@ void loop()
   
   Serial.println(total4);                // print sensor output 4
   
+  bool relayState = false;              // set true/false value for how the relay should switch. 
 
 
     if (total1 >= 500)
     {
       digitalWrite(LED_BUILTIN, HIGH);
       digitalWrite(relay, HIGH);
-      delay(1000);
+      relayState = true;
     }
     else
     {
       digitalWrite(LED_BUILTIN, LOW);
       digitalWrite(relay,LOW);
+      relayState = false;
     }
     
-    
+    bool switchFunction (bool sense,)
+    {
+      if (relayState = true){
+        digitalWrite(relay, HIGH);
+
+      }
+    }
     // TESTING AREA 
   
     
