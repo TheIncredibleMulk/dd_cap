@@ -14,14 +14,15 @@
 // set send and recieve pin numbers
 int send1 = 2;
 int recieve1 = 3;
-int send2 = 5;
-int recieve2 = 4;
-int send3 = 7;
-int recieve3 = 6;
-int send4 = 9;
-int recieve4 = 8;
-// set GPIO Relay/Opto Coupler value
-int relay = 12;
+int send2 = 4;
+int recieve2 = 5;
+int send3 = 6;
+int recieve3 = 7;
+int send4 = 8;
+int recieve4 = 9;
+int relay = 12;                 // set GPIO Relay/Opto Coupler value
+long previousMillis = 0;        //start the counter so we can count and keep sampling capacitive touch
+long interval = 1000;           //amount of time you want to wait until you can send a closure again
 
 CapacitiveSensor   cs_send1_recieve1 = CapacitiveSensor(send1,recieve1);        // 1M resistor between pins 6 & 3, pin 3 is sensor pin, add a wire and or foil
 CapacitiveSensor   cs_send2_recieve2 = CapacitiveSensor(send2,recieve2);        // 1M resistor between pins 7 & 4, pin 5 is sensor pin, add a wire and or foil
@@ -41,8 +42,8 @@ void setup()  {
   Serial.begin(9600);
   pinMode(LED_BUILTIN, OUTPUT);                         //set d13 as led output for sensing readout
   pinMode(relay, OUTPUT);
-   
-}
+  }
+
 
 
 void loop()                    
@@ -53,26 +54,25 @@ void loop()
       long total3 =  cs_send3_recieve3.capacitiveSensor(30);
       long total4 =  cs_send4_recieve4.capacitiveSensor(30);
 
-    Serial.print(millis() - start);        // check on performance in milliseconds
-    Serial.print("\t");                    // tab character for debug windown spacing
-
+  Serial.print(millis() - start);        // check on performance in milliseconds
+  Serial.print("\t");                    // tab character for debug windown spacing
   Serial.print(total1);                // print sensor output 1
   Serial.print("\t");
-
   Serial.print(total2);                // print sensor output 2
   Serial.print("\t");
-  
-
   Serial.print(total3);                // print sensor output 3
   Serial.print("\t");
-
-  
   Serial.println(total4);                // print sensor output 4
   
+
   bool relayState = false;              // set true/false value for how the relay should switch. 
+  
+  unsigned long currentMillis = millis(); 
+  if (currentMillis - previousMillis > interval )
+  {
+   previousMillis = currentMillis;
 
-
-    if (total1 >= 500)
+    if (total1 >= 500 or total2 >= 500 or total3 >= 500 or total4 >= 500)                   // look to see if the capacitive sensing value is high enough to trigger relay
     {
       digitalWrite(LED_BUILTIN, HIGH);
       digitalWrite(relay, HIGH);
@@ -84,14 +84,23 @@ void loop()
       digitalWrite(relay,LOW);
       relayState = false;
     }
-    
-    bool switchFunction (bool sense,)
-    {
-      if (relayState = true){
-        digitalWrite(relay, HIGH);
+  }    
 
-      }
+
+/*
+  void switchFunction (bool status) {
+     if (status = true)
+     {
+      digitalWrite(relay, HIGH);
+     }
+    else
+    {
+      digitalWrite(relay, LOW);
     }
+*/
+
+
+  
     // TESTING AREA 
   
     
