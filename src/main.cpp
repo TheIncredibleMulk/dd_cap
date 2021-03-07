@@ -64,19 +64,7 @@ void loop()
   Serial.print("\t");
   Serial.println(total4); // print sensor output 4
   Serial.print("\t");
-  /*
-  Serial.println();
-  Serial.print(capCurrentMillis); // print CapCurrentMillis
-  Serial.print(" - ");
-  Serial.print(capPreviousMillis); // print capPreviousMillis
-  Serial.print(" > ");
-  Serial.print(capInterval); // print capInterval
-  Serial.println();
-  capPreviousMillis - capCurrentMillis = capIntervalDebug;
 
-  Serial.print(capCurrentMillis);
-
-*/
   bool relayState = false; // set true/false value for how the relay should switch.
 
   if (capCurrentMillis - capPreviousMillis > capInterval)
