@@ -22,7 +22,7 @@ int recieve4 = 9;
 int relay = 12; // set GPIO Relay/Opto Coupler value
 
 long capPreviousMillis = 0; //start the counter so we can count and keep sampling capacitive touch
-long capInterval = 1000;    //amount of time you want to wait until you can send a closure again
+long capInterval = 500;     //amount of time you want to wait until you can send a closure again
 
 CapacitiveSensor cs_send1_recieve1 = CapacitiveSensor(send1, recieve1); // 1M resistor between pins 6 & 3, pin 3 is sensor pin, add a wire and or foil
 CapacitiveSensor cs_send2_recieve2 = CapacitiveSensor(send2, recieve2); // 1M resistor between pins 7 & 4, pin 5 is sensor pin, add a wire and or foil
@@ -53,7 +53,6 @@ void loop()
   long total3 = cs_send3_recieve3.capacitiveSensor(30);
   long total4 = cs_send4_recieve4.capacitiveSensor(30);
   long capCurrentMillis = millis();
-  delay(1000);
   Serial.println();
   Serial.print(millis() - start); // check on performance in milliseconds
   Serial.print("\t");             // tab character for debug windown spacing
@@ -65,6 +64,7 @@ void loop()
   Serial.print("\t");
   Serial.println(total4); // print sensor output 4
   Serial.print("\t");
+  /*
   Serial.println();
   Serial.print(capCurrentMillis); // print CapCurrentMillis
   Serial.print(" - ");
@@ -72,18 +72,19 @@ void loop()
   Serial.print(" > ");
   Serial.print(capInterval); // print capInterval
   Serial.println();
-  // capPreviousMillis - capCurrentMillis = capIntervalDebug;
+  capPreviousMillis - capCurrentMillis = capIntervalDebug;
 
-  Serial.print(capCurrentMillis)
+  Serial.print(capCurrentMillis);
 
-      bool relayState = false; // set true/false value for how the relay should switch.
+*/
+  bool relayState = false; // set true/false value for how the relay should switch.
 
   if (capCurrentMillis - capPreviousMillis > capInterval)
   {
-    capPreviousMillis = capCurrentMillis;
 
     if (total1 >= 500 or total2 >= 500 or total3 >= 500 or total4 >= 500) // look to see if the capacitive sensing value is high enough to trigger relay
     {
+      capPreviousMillis = capCurrentMillis;
       digitalWrite(LED_BUILTIN, HIGH);
       digitalWrite(relay, HIGH);
       relayState = true;
