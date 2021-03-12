@@ -67,7 +67,8 @@ void loop()
   Serial.print("\t");
   Serial.print(total4); // print sensor output 4
   Serial.print("\t");
-  Serial.print(capCurrentMillis - capPreviousMillis); // print sensor output 4
+  Serial.print(capCurrentMillis - capPreviousMillis); // Print Time
+  Serial.print("ms");
   Serial.print("\t");
 
   if (capCurrentMillis - capPreviousMillis > capInterval)
@@ -86,24 +87,3 @@ void loop()
       relayState = false;
     }
   }
-
-  /*
-  void switchFunction (bool status) {
-     if (status = true)
-     {
-      digitalWrite(relay, HIGH);
-     }
-    else
-    {
-      digitalWrite(relay, LOW);
-    }
-*/
-
-  // TESTING AREA
-
-  /* if (total3 > 20) digitalWrite(LED_BUILTIN, HIGH);
-    else delay(1000); 
-    digitalWrite(LED_BUILTIN, LOW); */
-
-  // need to set output delay so touch is instant but off is delayed
-}
