@@ -20,9 +20,11 @@ int recieve3 = 7;
 int send4 = 8;
 int recieve4 = 9;
 int relay = 12; // set GPIO Relay/Opto Coupler value
+int triggerThreshold = 200;
 
 long capPreviousMillis = 0; //start the counter so we can count and keep sampling capacitive touch
 long capInterval = 500;     //amount of time you want to wait until you can send a closure again
+bool relayState = false;    // set true/false value for how the relay should switch.
 
 CapacitiveSensor cs_send1_recieve1 = CapacitiveSensor(send1, recieve1); // 1M resistor between pins 6 & 3, pin 3 is sensor pin, add a wire and or foil
 CapacitiveSensor cs_send2_recieve2 = CapacitiveSensor(send2, recieve2); // 1M resistor between pins 7 & 4, pin 5 is sensor pin, add a wire and or foil
@@ -31,8 +33,8 @@ CapacitiveSensor cs_send4_recieve4 = CapacitiveSensor(send4, recieve4); // 1M re
 
 void setup()
 {
-  //cs_send1_recieve1.set_CS_AutocaL_Millis(0xFFFFFFFF);     // turn off autocalibrate on channel 1
-  //cs_send2_recieve2.set_CS_AutocaL_Millis(0xFFFFFFFF);     // turn off autocalibrate on channel 2
+  //cs_send1_recieve1.set_CS_AutocaL_Millis(0xFFFFFFFF); // turn off autocalibrate on channel 1
+  //cs_send2_recieve2.set_CS_AutocaL_Millis(0xFFFFFFFF); // turn off autocalibrate on channel 2
   //cs_send3_recieve3.set_CS_AutocaL_Millis(0xFFFFFFFF);     // turn off autocalibrate on channel 3
   //cs_send4_recieve4.set_CS_AutocaL_Millis(0xFFFFFFFF);     // turn off autocalibrate on channel 4
   cs_send1_recieve1.set_CS_Timeout_Millis(100000);
@@ -53,6 +55,7 @@ void loop()
   long total3 = cs_send3_recieve3.capacitiveSensor(30);
   long total4 = cs_send4_recieve4.capacitiveSensor(30);
   long capCurrentMillis = millis();
+
   Serial.println();
   Serial.print(millis() - start); // check on performance in milliseconds
   Serial.print("\t");             // tab character for debug windown spacing
@@ -62,15 +65,14 @@ void loop()
   Serial.print("\t");
   Serial.print(total3); // print sensor output 3
   Serial.print("\t");
-  Serial.println(total4); // print sensor output 4
+  Serial.print(total4); // print sensor output 4
   Serial.print("\t");
-
-  bool relayState = false; // set true/false value for how the relay should switch.
+  Serial.print(capCurrentMillis - capPreviousMillis); // print sensor output 4
+  Serial.print("\t");
 
   if (capCurrentMillis - capPreviousMillis > capInterval)
   {
-
-    if (total1 >= 500 or total2 >= 500 or total3 >= 500 or total4 >= 500) // look to see if the capacitive sensing value is high enough to trigger relay
+    if (total1 >= triggerThreshold or total2 >= triggerThreshold or total3 >= triggerThreshold or total4 >= triggerThreshold) // look to see if the capacitive sensing value is high enough to trigger relay
     {
       capPreviousMillis = capCurrentMillis;
       digitalWrite(LED_BUILTIN, HIGH);
