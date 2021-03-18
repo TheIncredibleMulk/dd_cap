@@ -87,7 +87,4 @@ void loop()
       relayState = false;
     }
   }
-<<<<<<< HEAD
 }
-=======
->>>>>>> 5ecd8baacbe1903460728fe99c7a3314e4f704cb
