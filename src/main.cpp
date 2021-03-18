@@ -25,10 +25,10 @@ int triggerThreshold = 3500;
 long capPreviousMillis = 0; //start the counter so we can count and keep sampling capacitive touch
 long capInterval = 500;     //amount of time you want to wait until you can send a closure again
 
-CapacitiveSensor cs_send1_recieve1 = CapacitiveSensor(send1, recieve1); // 1M resistor between pins 6 & 3, pin 3 is sensor pin, add a wire and or foil
-CapacitiveSensor cs_send2_recieve2 = CapacitiveSensor(send2, recieve2); // 1M resistor between pins 7 & 4, pin 5 is sensor pin, add a wire and or foil
-CapacitiveSensor cs_send3_recieve3 = CapacitiveSensor(send3, recieve3); // 1M resistor between pins 8 & 5, pin 5 is sensor pin, add a wire and or foil
-CapacitiveSensor cs_send4_recieve4 = CapacitiveSensor(send4, recieve4); // 1M resistor between pins 11 & 9, pin 5 is sensor pin, add a wire and or foil
+CapacitiveSensor cs_send1_recieve1 = CapacitiveSensor(send1, recieve1); // 1M resistor between pins 2 & 3, pin 2 is sensor pin, add a wire and or foil
+CapacitiveSensor cs_send2_recieve2 = CapacitiveSensor(send2, recieve2); // 1M resistor between pins 4 & 5, pin 4 is sensor pin, add a wire and or foil
+CapacitiveSensor cs_send3_recieve3 = CapacitiveSensor(send3, recieve3); // 1M resistor between pins 6 & 7, pin 6 is sensor pin, add a wire and or foil
+CapacitiveSensor cs_send4_recieve4 = CapacitiveSensor(send4, recieve4); // 1M resistor between pins 8 & 9, pin 8 is sensor pin, add a wire and or foil
 
 void setup()
 {
@@ -57,7 +57,6 @@ void loop()
 
   if (capCurrentMillis - capPreviousMillis > capInterval)
   {
-    //delay(250);
     Serial.println();
     Serial.print(millis() - start); // check on performance in milliseconds
     Serial.print("\t");             // tab character for debug windown spacing
@@ -89,24 +88,4 @@ void loop()
       relayState = false;
     }
   }
-
-  /*
-  void switchFunction (bool status) {
-     if (status = true)
-     {
-      digitalWrite(relay, HIGH);
-     }
-    else
-    {
-      digitalWrite(relay, LOW);
-    }
-*/
-
-  // TESTING AREA
-
-  /* if (total3 > 20) digitalWrite(LED_BUILTIN, HIGH);
-    else delay(1000); 
-    digitalWrite(LED_BUILTIN, LOW); */
-
-  // need to set output delay so touch is instant but off is delayed
 }
