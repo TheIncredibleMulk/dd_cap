@@ -20,7 +20,7 @@ int recieve3 = 7;
 int send4 = 8;
 int recieve4 = 9;
 int relay = 12; // set GPIO Relay/Opto Coupler value
-int triggerThreshold = 200;
+int triggerThreshold = 1100; // adjustable trigger threshold based on size of warp beam (MU - 3.22.21)
 
 long capPreviousMillis = 0; //start the counter so we can count and keep sampling capacitive touch
 long capInterval = 500;     //amount of time you want to wait until you can send a closure again
